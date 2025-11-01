@@ -20,19 +20,6 @@ add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
 # Set target properties
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
-# Compiler-specific options
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(${PROJECT_NAME} PRIVATE 
-        -Wall -Wextra -O2
-        -Wno-c++98-compat
-        -Wno-c++98-compat-pedantic
-        -Wno-c++98-c++11-compat
-        -Wno-c++98-c++11-compat-pedantic
-    )
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /O2)
-endif()
-
 # Set output directory
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
