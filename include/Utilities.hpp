@@ -35,14 +35,18 @@ protected:
 };
 
 
-/*
- * @brief 使用元组解包调用函数, 用C++17之前没有std::apply的环境
- */
 template <typename Func, typename Tuple, std::size_t... I>
 decltype(auto) ApplyWithUnpackedTupleImpl(Func&& func, Tuple&& tuple, std::index_sequence<I...>) {
     return std::forward<Func>(func)(std::get<I>(std::forward<Tuple>(tuple))...);
 }
 
+/*
+ * @brief: 使用元组解包调用函数, 用C++17之前没有std::apply的环境
+ * @Usage: sum =  ApplyWithUnpackedTuple(
+ *             [](int a, int b){ return a + b; }, 
+ *             std::make_tuple(1, 2)
+ *         ); // sum == 3
+ */
 template <typename Func, typename Tuple>
 decltype(auto) ApplyWithUnpackedTuple(Func&& func, Tuple&& tuple) {
     return ApplyWithUnpackedTupleImpl(
